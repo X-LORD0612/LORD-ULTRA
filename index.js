@@ -53,7 +53,7 @@ async function startBot() {
       if (command?.toLowerCase() === 'ping') {
         await sock.sendMessage(jid, { text: 'Pong! LORD ULTRA is online ⚡' }, { quoted: msg });
       } else if (command?.toLowerCase() === 'menu') {
-        await sock.sendMessage(jid, { text: '*LORD ULTRA MENU*\n\n.ping — Check bot status\n.menu — Show this menu' }, { quoted: msg });
+        await sock.sendMessage(jid, { text: buildMenu({ prefix, owner: process.env.OWNER || 'Not set', mode: process.env.MODE || 'Public', version: '1.0.0', uptime: formatUptime(), speed: 'live' }) }, { quoted: msg });
       }
     }
   });
