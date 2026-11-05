@@ -2,9 +2,18 @@ import 'dotenv/config';
 import makeWASocket, { DisconnectReason, useMultiFileAuthState } from '@whiskeysockets/baileys';
 import pino from 'pino';
 import qrcode from 'qrcode-terminal';
+import { buildMenu } from './menu.js';
 
 const logger = pino({ level: process.env.LOG_LEVEL || 'silent' });
 const prefix = process.env.PREFIX || '.';
+const startedAt = Date.now();
+const formatUptime = () => {
+  const seconds = Math.floor((Date.now() - startedAt) / 1000);
+  const h = Math.floor(seconds / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+  return [h, m, s].map(value => String(value).padStart(2, '0')).join(':');
+};
 
 async function startBot() {
   const { state, saveCreds } = await useMultiFileAuthState('session');
