@@ -1,3 +1,5 @@
+import { totalmem } from 'node:os';
+
 export const commandCategories = {
   'GEN-CMD': 'alive apk attp botinfo botstatus checkwa circlesticker crop delpp egif fancy getpp getsettings google image2 define news2 groupinfo groupstats help img inviteinfo lid menu myactivity owner pair ping poll qr reshare setprofile simage testsnapshot ssweb sticker stickerpack take telepack time tts uptime write'.split(' '),
   'AI-CMD': 'ai chatgpt gpt4o claude gemini mistral copilot metaai llama blackbox bard perplexity venice o3'.split(' '),
@@ -15,7 +17,7 @@ export const commandCategories = {
 
 export function buildMenu({ prefix = '.', owner = 'Not set', mode = 'Public', version = '1.0.0', uptime = 'unknown', speed = 'unknown', platform = process.platform, ram = process.memoryUsage().rss } = {}) {
   const usedMb = (ram / 1024 / 1024).toFixed(1);
-  const totalMb = (requireTotalMemory() / 1024 / 1024).toFixed(0);
+  const totalMb = (totalmem() / 1024 / 1024).toFixed(0);
   const lines = [
     '┏━━❐◈LORD ULTRA◈',
     `┃ *PREFIX:* ${prefix}`,
@@ -39,7 +41,3 @@ export function buildMenu({ prefix = '.', owner = 'Not set', mode = 'Public', ve
   return lines.join('\n');
 }
 
-function requireTotalMemory() {
-  // Node's built-in os module is loaded lazily to keep this module dependency-free.
-  return process.memoryUsage().heapTotal > 0 ? Number(process.env.RAM_TOTAL_BYTES || 0) || 1 : 1;
-}
