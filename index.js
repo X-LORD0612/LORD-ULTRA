@@ -1,7 +1,6 @@
 import 'dotenv/config';
 import makeWASocket, { DisconnectReason, useMultiFileAuthState } from '@whiskeysockets/baileys';
 import pino from 'pino';
-import qrcodeTerminal from 'qrcode-terminal';
 import QRCode from 'qrcode';
 import express from 'express';
 import { randomBytes } from 'node:crypto';
@@ -29,8 +28,10 @@ app.get('/qr/' + qrToken, async (_req, res) => {
 });
 const port = Number(process.env.PORT || 3000);
 app.listen(port, '0.0.0.0', () => {
-  console.log('LORD ULTRA QR page path: /qr/' + qrToken);
-  console.log('Set a Railway public domain to open this page on your phone.');
+  const publicDomain = process.env.RAILWAY_PUBLIC_DOMAIN;
+  const qrPage = (publicDomain ? 'https://' + publicDomain : '') + '/qr/' + qrToken;
+  console.log('LORD ULTRA QR PAGE: ' + qrPage);
+  if (!publicDomain) console.log('Add a Railway public domain to this service to open the QR page in Chrome.');
 });
 
 const formatUptime = () => {
@@ -57,7 +58,6 @@ async function startBot() {
       connected = false;
       console.log('A fresh WhatsApp QR is available at /qr/' + qrToken);
       console.log('Scan using WhatsApp Linked Devices.');
-      qrcodeTerminal.generate(qr, { small: true });
     }
     if (connection === 'open') {
       connected = true;
