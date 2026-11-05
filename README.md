@@ -19,7 +19,7 @@ Scan the QR shown in the terminal using WhatsApp → Linked devices → Link a d
 
 ## Commands
 - `.ping` — check whether the bot is online
-- `.menu` — show available commands
+- `.menu` — show the 12-category LORD ULTRA command menu
 
 Set `PREFIX` in `.env` to change the command prefix.
 
@@ -28,3 +28,6 @@ Never upload your `.env` file or the `session/` directory. They contain private 
 
 ## Status
 This is the initial connection and command framework. Additional modules such as music, downloads, group administration, and owner controls still need to be implemented and tested.
+
+
+The menu lists the planned command set. At this stage, only `.ping` and `.menu` are implemented; the other commands are placeholders until their modules are added and tested. Configure `OWNER` and `MODE` in `.env` if desired.
